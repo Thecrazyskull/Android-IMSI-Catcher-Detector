@@ -781,7 +781,11 @@ public class CellTracker implements SharedPreferences.OnSharedPreferenceChangeLi
                         signalStrength.getGsmSignalStrength() == NeighboringCellInfo.UNKNOWN_RSSI) {
                     // Unknown signal strength, get it another way
                     String[] bits = signalStrength.toString().split(" ");
-                    dbm = Integer.parseInt(bits[9]);
+                    try {
+                        dbm = Integer.parseInt(bits[9]);
+                    } catch (NumberFormatException ignored) {
+                        dbm = signalStrength.getGsmSignalStrength();
+                    }
                 } else {
                     dbm = signalStrength.getGsmSignalStrength();
                 }
